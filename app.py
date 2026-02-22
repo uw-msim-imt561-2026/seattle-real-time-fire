@@ -23,7 +23,7 @@ def main() -> None:
       st.subheader("Map of Fire Calls")
       plot_calls_map(df)
     with col2:
-      st.subheader("911 CalL Details")
+      st.subheader("911 Call Details")
       st.dataframe(df[["Datetime", "Type", "Incident_Category", "Address"]], height=500)
 
 

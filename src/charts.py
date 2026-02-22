@@ -10,6 +10,7 @@ def plot_calls_map(df: pd.DataFrame) -> None:
         df,
         lat="Latitude",
         lon="Longitude",
+        color='Incident_Category',
         hover_name="Type",
         hover_data=["Incident_Category", "Address", "Datetime"],
         zoom=10,
