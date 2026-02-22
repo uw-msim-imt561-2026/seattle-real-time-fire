@@ -1,9 +1,9 @@
 [project]
-name = "Seattle Real Time Fire 911 Calls"
+name = "SeattleRealTimeFire911Calls"
 version = "1.0.0"
 description = "<UPDATE ME>"
 authors = [
-  {name = "Your Name", email = "you@example.com"},
+  {name = "John Thomas", email = "johnetho@uw.edu"},
   {name = "Your Name", email = "you@example.com"},
   {name = "Your Name", email = "you@example.com"}
 ]
@@ -11,7 +11,12 @@ requires-python = ">=3.14"
 dependencies = [
     "streamlit (>=1.54.0,<2.0.0)",
     "pandas (>=2.0.0,<3.0.0)",
-    "numpy (>=2.4.2,<3.0.0)"
+    "numpy (>=2.4.2,<3.0.0)",
+    "geopandas (>=1.1.2,<2.0.0)",
+    "contextily (>=1.7.0,<2.0.0)",
+    "seaborn (>=0.13.2,<0.14.0)",
+    "matplotlib (>=3.10.8,<4.0.0)",
+    "plotly-express (>=0.4.1,<0.5.0)"
 ]
 
 
