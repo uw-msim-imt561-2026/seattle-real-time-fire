@@ -23,12 +23,12 @@ def main() -> None:
     df_f = apply_filters(df, selections)
 
     # HEADER KPIs
-    header_metrics(df)
+    header_metrics(df_f)
 
     st.divider()
 
     # BODY LAYOUT (Tabs)
-    body_layout_tabs(df)
+    body_layout_tabs(df_f)
 
 if __name__ == "__main__":
     main()

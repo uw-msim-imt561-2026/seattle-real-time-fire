@@ -40,7 +40,7 @@ def apply_filters(df: pd.DataFrame, selections: dict) -> pd.DataFrame:
     # Apply date range filter
     date_range = selections["date_range"]
     lo_date = date_range[0]
-    hi_date = date_range[1] if len(date_range) > 1 else selections["max_date"]
+    hi_date = date_range[1] if len(date_range) > 1 else selections["max_date"].date()
     out = out[(out["Datetime"].dt.date >= lo_date) & (out["Datetime"].dt.date <= hi_date)]
 
     #apply address / neighborhood / location filters - TODO

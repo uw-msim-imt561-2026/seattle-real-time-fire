@@ -9,8 +9,9 @@ def load_data(path: str) -> pd.DataFrame:
 
     #parsing Datetime
     df["Datetime"] = pd.to_datetime(df["Datetime"], errors="coerce")
+    
     #parsing in more detail for visualizations
-    df["Datetime"] = pd.to_datetime(df["Datetime"], format="%Y %b %d %I:%M:%S %p")
+    df["Formatted Datetime"] = pd.to_datetime(df["Datetime"], format="%Y %b %d %I:%M:%S %p")
     df["hour"] = df["Datetime"].dt.hour
     df["day_of_week"] = df["Datetime"].dt.day_name()
     df["month"] = df["Datetime"].dt.month
@@ -189,6 +190,9 @@ def augment_data(df: pd.DataFrame) -> pd.DataFrame:
     "Testing":["TEST - MIS TEST"]
 }
     df["Incident_Category"] = df["Type"].map(lambda x: next((cat for cat, types in type_categories.items() if x in types), "Other"))
+
+    #remove rows on Jan 1 2026
+    df = df[df["Datetime"] < "2026-01-01"]
 
     # TODO - Augment with neighborhood names or geofences
 

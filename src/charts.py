@@ -15,7 +15,8 @@ def plot_calls_map(df: pd.DataFrame) -> None:
         hover_data=["Incident_Category", "Address", "Datetime"],
         zoom=10,
         center={"lat": 47.6062, "lon": -122.3320},
-        mapbox_style="open-street-map"
+        mapbox_style="carto-darkmatter",
+        template="plotly_dark"
         )
     st.plotly_chart(fig, use_container_width=True)
 
