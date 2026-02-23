@@ -9,10 +9,10 @@ def load_data(path: str) -> pd.DataFrame:
     #parsing Datetime
     df["Datetime"] = pd.to_datetime(df["Datetime"], errors="coerce")
     #parsing in more detail for visualizations
-    data["Datetime"] = pd.to_datetime(data["Datetime"], format="%Y %b %d %I:%M:%S %p")
-    data["hour"] = data["Datetime"].dt.hour
-    data["day_of_week"] = data["Datetime"].dt.day_name()
-    data["month"] = data["Datetime"].dt.month
+    df["Datetime"] = pd.to_datetime(df["Datetime"], format="%Y %b %d %I:%M:%S %p")
+    df["hour"] = df["Datetime"].dt.hour
+    df["day_of_week"] = df["Datetime"].dt.day_name()
+    df["month"] = df["Datetime"].dt.month
     return df
 
 @st.cache_data(show_spinner=False)
