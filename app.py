@@ -1,6 +1,7 @@
 import streamlit as st
+
 from src.data import load_data, load_geospatial_data, augment_data
-from src.charts import plot_calls_map
+from src.layout import header_metrics, body_layout_tabs
 from src.filters import render_filters, apply_filters
 
 def main() -> None:
@@ -21,16 +22,13 @@ def main() -> None:
     selections = render_filters(df)
     df_f = apply_filters(df, selections)
 
-    #display Map: 
+    # HEADER KPIs
+    header_metrics(df)
 
-    col1, col2 = st.columns(2)
-    with col1:
-      st.subheader("Map of Fire Calls")
-      plot_calls_map(df_f)
-    with col2:
-      st.subheader("911 Call Details")
-      st.dataframe(df_f[["Datetime", "Type", "Incident_Category", "Address"]], height=500)
+    st.divider()
 
+    # BODY LAYOUT (Tabs)
+    body_layout_tabs(df)
 
 if __name__ == "__main__":
     main()
