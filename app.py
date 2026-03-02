@@ -11,7 +11,8 @@ def main() -> None:
     )
 
     st.title("Seattle Fire 911 Calls in 2025")
-    st.caption("This dashboard provides insights into the fire-related 911 calls in Seattle for the year 2025.")
+    st.caption("This dashboard provides insights into the fire-related 911 calls in Seattle for the year 2025. Dataset Reference: "
+               "https://data.seattle.gov/Public-Safety/Seattle-Real-Time-Fire-911-Calls/kzjm-xkqj/about_data")
 
 
     # Load data
