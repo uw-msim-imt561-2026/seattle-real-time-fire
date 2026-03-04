@@ -6,13 +6,19 @@ import streamlit as st
 
 def plot_calls_map(df: pd.DataFrame) -> None:
     """Plot a map of fire calls."""
+    
+    if len(df["Incident_Category"].unique()) == 1:
+        category = "Type"
+    else: 
+        category = "Incident_Category"
+
     fig = px.scatter_mapbox(
         df,
         lat="Latitude",
         lon="Longitude",
-        color='Incident_Category',
-        hover_name="Type",
-        hover_data=["Incident_Category", "Address", "Datetime"],
+        color=category,
+        hover_name=category,
+        hover_data=[category, "Address", "Datetime"],
         zoom=10,
         center={"lat": 47.6062, "lon": -122.3320},
         mapbox_style="carto-darkmatter",
@@ -86,33 +92,39 @@ def plot_incident_count_by_date(df: pd.DataFrame) -> None:
     fig.update_layout(hovermode="x unified")
     st.plotly_chart(fig, use_container_width=True)
 
+
 def plot_incident_category_distribution(df: pd.DataFrame) -> None:
     """Plot distribution of incidents by Incident_Category. Again, assumes df is already filtered upstream."""
     if df.empty:
         st.warning("No data available for selected filters.")
         return
+    
+    if len(df["Incident_Category"].unique()) == 1:
+        category = "Type"
+    else: 
+        category = "Incident_Category"
 
     # Remove missing categories
-    df = df.dropna(subset=["Incident_Category"])
+    df = df.dropna(subset=[category])
 
     # Count incidents by category
     category_counts = (
-        df["Incident_Category"]
+        df[category]
         .value_counts()
         .reset_index()
     )
 
-    category_counts.columns = ["Incident_Category", "incident_count"]
+    category_counts.columns = [category, "incident_count"]
 
     fig = px.bar(
         category_counts,
         x="incident_count",
-        y="Incident_Category",
+        y=category,
         orientation="h",
         title="Incident Distribution by Category",
         labels={
             "incident_count": "Number of Incidents",
-            "Incident_Category": "Incident Category"
+            category: category
         }
     )
 
