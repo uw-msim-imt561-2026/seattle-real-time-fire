@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
 import streamlit as st
-
+import plotly.figure_factory as ff
 
 def plot_calls_map(df: pd.DataFrame) -> None:
     """Plot a map of fire calls."""
@@ -12,18 +12,36 @@ def plot_calls_map(df: pd.DataFrame) -> None:
     else: 
         category = "Incident_Category"
 
-    fig = px.scatter_mapbox(
+    # fig = px.scatter_mapbox(
+    #     df,
+    #     lat="Latitude",
+    #     lon="Longitude",
+    #     color=category,
+    #     hover_name=category,
+    #     hover_data=[category, "Address", "Datetime"],
+    #     zoom=10,
+    #     center={"lat": 47.6062, "lon": -122.3320},
+    #     mapbox_style="carto-darkmatter",
+    #     template="plotly_dark"
+    #     )
+    
+    fig = ff.create_hexbin_map(
         df,
         lat="Latitude",
         lon="Longitude",
-        color=category,
-        hover_name=category,
-        hover_data=[category, "Address", "Datetime"],
-        zoom=10,
-        center={"lat": 47.6062, "lon": -122.3320},
-        mapbox_style="carto-darkmatter",
-        template="plotly_dark"
-        )
+        nx_hexagon=50,
+        opacity=0.6,
+        labels={"color": "Call Density"},
+        title="Geographic Density of Fire Calls",
+        #show_original_data=True,
+        color_continuous_midpoint=(len(df)*0.005),  # Adjust midpoint based on data size
+        color_continuous_scale="balance",
+        map_style="dark",
+        template="plotly_dark",
+        height=700
+        #show_original_data=True,
+        #  original_data_marker=dict(opacity=0.4, size=1, color="deeppink")
+    )
     st.plotly_chart(fig, use_container_width=True)
 
 

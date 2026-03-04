@@ -87,18 +87,20 @@ def body_layout_tabs(df: pd.DataFrame) -> None:
         # Drop missing lat/lon for map only
         map_df = df.dropna(subset=["Latitude", "Longitude"])
 
-        plot_calls_map(map_df)
+        col1, col2 = st.columns([2,1])
 
+        with col1:
+            plot_calls_map(map_df)
+
+        with col2:
+            st.subheader("Filtered Data Preview")
+            st.dataframe(df, use_container_width=True, height=400)
+            st.download_button(
+                label="Download filtered data as CSV",
+                data=df.to_csv(index=False),
+                file_name="filtered_fire_calls.csv",
+                mime="text/csv"
+            )
         st.caption(
             "Geographic distribution of incidents based on available coordinates."
-        )
-
-        st.subheader("Filtered Data Preview")
-        st.dataframe(df, use_container_width=True, height=400)
-
-        st.download_button(
-            label="Download filtered data as CSV",
-            data=df.to_csv(index=False),
-            file_name="filtered_fire_calls.csv",
-            mime="text/csv"
         )
