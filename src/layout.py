@@ -54,34 +54,13 @@ def body_layout_tabs(df: pd.DataFrame) -> None:
     """Main dashboard body organized into tabs."""
 
     t1, t2, t3 = st.tabs([
+        "Geographic View",
         "Time Patterns",
-        "Incident Categories",
-        "Geographic View"
+        "Incident Categories"
     ])
 
-# Tab 1: Time Patterns
+# Tab 1: Geographic View
     with t1:
-        st.subheader("Call Volume by Hour")
-        plot_call_volume_by_hour(df)
-
-        st.subheader("Daily Incident Trend")
-        plot_incident_count_by_date(df)
-
-        st.caption(
-            "These charts show temporal distribution and daily trends "
-            "for incidents within the selected filters."
-        )
-# Tab 2: Incident Distribution
-    with t2:
-        st.subheader("Incident Distribution by Category")
-        plot_incident_category_distribution(df)
-
-        st.caption(
-            "This view highlights which incident categories "
-            "drive overall call demand."
-        )
-# Tab 3:
-    with t3:
         st.subheader("Map of Incidents")
 
         # Drop missing lat/lon for map only
@@ -103,4 +82,28 @@ def body_layout_tabs(df: pd.DataFrame) -> None:
             )
         st.caption(
             "Geographic distribution of incidents based on available coordinates."
+        )
+
+
+# Tab 2: Incident Distribution
+    with t2:
+        st.subheader("Incident Distribution by Category")
+        plot_incident_category_distribution(df)
+
+        st.caption(
+            "This view highlights which incident categories "
+            "drive overall call demand."
+        )
+
+# Tab 3: Time Patterns
+    with t3:
+        st.subheader("Call Volume by Hour")
+        plot_call_volume_by_hour(df)
+
+        st.subheader("Daily Incident Trend")
+        plot_incident_count_by_date(df)
+
+        st.caption(
+            "These charts show temporal distribution and daily trends "
+            "for incidents within the selected filters."
         )
