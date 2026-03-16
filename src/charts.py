@@ -40,7 +40,7 @@ def plot_calls_map(df: pd.DataFrame) -> None:
         template="plotly_dark",
         height=700
         #show_original_data=True,
-        #  original_data_marker=dict(opacity=0.4, size=1, color="deeppink")
+        #original_data_marker=dict(opacity=0.4, size=1, color="deeppink")
     )
     st.plotly_chart(fig, use_container_width=True)
 
