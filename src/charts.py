@@ -7,40 +7,20 @@ import plotly.figure_factory as ff
 def plot_calls_map(df: pd.DataFrame) -> None:
     """Plot a map of fire calls."""
     
-    if len(df["Incident_Category"].unique()) == 1:
-        category = "Type"
-    else: 
-        category = "Incident_Category"
-
-    # fig = px.scatter_mapbox(
-    #     df,
-    #     lat="Latitude",
-    #     lon="Longitude",
-    #     color=category,
-    #     hover_name=category,
-    #     hover_data=[category, "Address", "Datetime"],
-    #     zoom=10,
-    #     center={"lat": 47.6062, "lon": -122.3320},
-    #     mapbox_style="carto-darkmatter",
-    #     template="plotly_dark"
-    #     )
-    
     fig = ff.create_hexbin_map(
         df,
         lat="Latitude",
         lon="Longitude",
         nx_hexagon=50,
         opacity=0.6,
-        labels={"color": "Call Density"},
+        labels={"color": "Number of Incidents"},
         title="Geographic Density of Fire Calls",
-        #show_original_data=True,
         color_continuous_midpoint=(len(df)*0.005),  # Adjust midpoint based on data size
         color_continuous_scale="balance",
         map_style="dark",
         template="plotly_dark",
-        height=700
-        #show_original_data=True,
-        #original_data_marker=dict(opacity=0.4, size=1, color="deeppink")
+        height=700,
+        min_count=1  # Only show hexagons with at least 1 incident
     )
     st.plotly_chart(fig, use_container_width=True)
 
@@ -61,6 +41,7 @@ def plot_call_volume_by_hour(df: pd.DataFrame) -> None:
 
     # Adding dynamic title based on incident categories present
     categories = df["Incident_Category"].unique()
+    
     if len(categories) == 1:
         title = f"Call Volume by Hour — {categories[0]}"
     else:
@@ -71,10 +52,10 @@ def plot_call_volume_by_hour(df: pd.DataFrame) -> None:
         hour_counts,
         x="hour",
         y="call_count",
-        title="Distribution of 911 Fire Calls by Hour",
+        title="Distribution of 911 Fire Incidents by Hour",
         labels={
             "hour": "Hour of Day",
-            "call_count": "Number of Calls"
+            "call_count": "Number of Incidents"
         }
     )
     fig.update_layout(xaxis=dict(dtick=1))
@@ -142,7 +123,7 @@ def plot_incident_category_distribution(df: pd.DataFrame) -> None:
         title="Incident Distribution by Category",
         labels={
             "incident_count": "Number of Incidents",
-            category: category
+            category: "Incident Category"
         }
     )
 

@@ -17,6 +17,11 @@ def render_filters(df: pd.DataFrame) -> dict:
     max_date = df["Datetime"].max()
     date_range = st.sidebar.date_input("Date Range", [min_date, max_date], min_value=min_date, max_value=max_date)
 
+    # Filter by time range
+    col1, col2 = st.sidebar.columns(2)
+    start_time = col1.time_input( "Start time", value=pd.to_datetime("00:00").time() )
+    end_time = col2.time_input("End time", value=pd.to_datetime("23:59").time())
+        
     # Filter by Address / Neighborhood / Location
     # TODO - Augment with neighborhood names or geofences
 
@@ -24,8 +29,8 @@ def render_filters(df: pd.DataFrame) -> dict:
     selected_filters ={
     "dynamic_category": dynamic_filters,
     "date_range": date_range,
-    "max_date": max_date
-
+    "max_date": max_date,
+    "time_range": [start_time, end_time]
     }
     return selected_filters
 
@@ -42,6 +47,12 @@ def apply_filters(df: pd.DataFrame, selections: dict) -> pd.DataFrame:
     lo_date = date_range[0]
     hi_date = date_range[1] if len(date_range) > 1 else selections["max_date"].date()
     out = out[(out["Datetime"].dt.date >= lo_date) & (out["Datetime"].dt.date <= hi_date)]
+
+    # Apply time range filter
+    time_range = selections["time_range"]
+    lo_time = time_range[0]
+    hi_time = time_range[1] if len(time_range) > 1 else pd.to_datetime("23:59").time()
+    out = out[(out["Datetime"].dt.time >= lo_time) & (out["Datetime"].dt.time <= hi_time)]
 
     #apply address / neighborhood / location filters - TODO
 

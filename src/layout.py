@@ -55,8 +55,8 @@ def body_layout_tabs(df: pd.DataFrame) -> None:
 
     t1, t2, t3 = st.tabs([
         "Geographic View",
-        "Time Patterns",
-        "Incident Categories"
+        "Incident Categories",
+        "Time Patterns"
     ])
 
 # Tab 1: Geographic View
